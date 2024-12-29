@@ -10,39 +10,39 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # Chequea el código del repositorio
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # # Chequea el código del repositorio
+      # - name: Checkout code
+      #   uses: actions/checkout@v3
 
-      # Configura Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22 # Ajusta según tu proyecto
-          cache: 'yarn'
+      # # Configura Node.js
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 22 # Ajusta según tu proyecto
+      #     cache: 'yarn'
 
-      # Instala dependencias
-      - name: Install dependencies
-        run: yarn install --immutable
+      # # Instala dependencias
+      # - name: Install dependencies
+      #   run: yarn install --immutable
 
-      # Genera tipos usando TypeScript
-      - name: Compile TypeScript types
-        run: yarn tsc
+      # # Genera tipos usando TypeScript
+      # - name: Compile TypeScript types
+      #   run: yarn tsc
 
-      # Construye el backend
-      - name: Build backend
-        run: yarn build:backend
+      # # Construye el backend
+      # - name: Build backend
+      #   run: yarn build:backend
 
       # Inicia sesión en GHCR
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # Construye y etiqueta la imagen Docker
-      - name: Build Docker Image
-        run: |
-          docker build -f packages/backend/Dockerfile -t ghcr.io/${{ github.repository_owner }}/my-node-app:latest .
+      # # Construye y etiqueta la imagen Docker
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -f packages/backend/Dockerfile -t ghcr.io/${{ github.repository_owner }}/my-node-app:latest .
 
-      # Sube la imagen al registro GHCR
-      - name: Push Docker Image
-        run: |
-          docker push ghcr.io/${{ github.repository_owner }}/my-node-app:latest
+      # # Sube la imagen al registro GHCR
+      # - name: Push Docker Image
+      #   run: |
+      #     docker push ghcr.io/${{ github.repository_owner }}/my-node-app:latest
